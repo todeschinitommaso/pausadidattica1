@@ -21,7 +21,10 @@ namespace pausadidattica1
 
         private DateTime _orario;
 
-        private int _nprenotazioni = 0;
+        private int[] _nprenotazioni;
+
+        public int counter = 0;
+
 
         public string CodiceVolo()
         {
@@ -61,17 +64,37 @@ namespace pausadidattica1
             return _prezzo;
         }
 
-        public int EmissioneBiglietto(int _prezzo, int _nprenotazioni)
+        public void EmissioneBiglietto(int _prezzo, int counter)
         {
-            while(_nprenotazioni < _posti)
+            while(counter < _posti)
             {
-                if(_nprenotazioni % 5 == 0 && _nprenotazioni != 0)
+                if(counter % 5 == 0 && counter != 0)
                 {
                     int aggiunta = (5 * _prezzo) / 100;
                     _prezzo = _prezzo + aggiunta;
                 }
+                _nprenotazioni[counter] = _prezzo;
             }
-            return _nprenotazioni;
+        }
+
+        public void Disdetta(int nprenotazione)
+        {
+            _nprenotazioni[nprenotazione] = 0;
+        }
+
+        public string ConfrontoBiglieti(int a, int b)
+        {
+            string c;
+            if (_nprenotazioni[a] > _nprenotazioni[b])
+            {
+                c = "La prenotazione 1 costa più della 2";
+            }
+            else
+            {
+                c = "La prenotazione 2 costa più della 1";
+            }
+
+            return c;
         }
 
         public string Codice
@@ -164,21 +187,6 @@ namespace pausadidattica1
             }
         }
 
-        public int Nprenotazioni
-        {
-            get
-            {
-                return _nprenotazioni;
-            }
-            set
-            {
-                if (value < 0)
-                    throw new Exception("Prenotazione non valida");
-                else
-                    _nprenotazioni = value;
-            }
-        }
-
         public volo(string codice, int posti, int prezzo, string partenza, string destinazione, DateTime orario, int nprenotazioni)
         {
             Codice = _codice;
@@ -187,7 +195,7 @@ namespace pausadidattica1
             Partenza = _partenza;
             Destinazione = _destinazione;
             Orario = _orario;
-            Nprenotazioni = _nprenotazioni;
+            _nprenotazioni = new int[_posti];
         }
 
     }
