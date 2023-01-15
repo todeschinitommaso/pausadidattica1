@@ -21,7 +21,7 @@ namespace pausadidattica1
 
         private DateTime _orario;
 
-        private int[] _nprenotazioni;
+        public int[] _nprenotazioni;
 
         public int counter = 0;
 
@@ -66,9 +66,9 @@ namespace pausadidattica1
 
         public void EmissioneBiglietto(int _prezzo, int counter)
         {
-            while(counter < _posti)
+            while (counter < _posti)
             {
-                if(counter % 5 == 0 && counter != 0)
+                if (counter % 5 == 0 && counter != 0)
                 {
                     int aggiunta = (5 * _prezzo) / 100;
                     _prezzo = _prezzo + aggiunta;
@@ -187,7 +187,7 @@ namespace pausadidattica1
             }
         }
 
-        public volo(string codice, int posti, int prezzo, string partenza, string destinazione, DateTime orario, int nprenotazioni)
+        public volo(string codice, int posti, int prezzo, string partenza, string destinazione, DateTime orario)
         {
             Codice = _codice;
             Posti = _posti;
@@ -196,6 +196,30 @@ namespace pausadidattica1
             Destinazione = _destinazione;
             Orario = _orario;
             _nprenotazioni = new int[_posti];
+        }
+
+        public bool Equals(volo v)
+        {
+            if (v == null) return false;
+
+            if (this == v) return true;
+
+            return (this.Codice == v.Codice);
+        }
+
+        public override string ToString()
+        {
+            return this.Codice + ";" + this.Posti + ";" + this.Prezzo + ";" + this.Partenza + ";" + this.Destinazione + ";" + this.Orario;
+        }
+
+        public volo Clone()
+        {
+            return new volo(this);
+        }
+
+        protected volo(volo other) : this(other.Codice, other.Posti, other.Prezzo, other.Partenza, other.Destinazione, other.Orario)
+        {
+
         }
 
     }
