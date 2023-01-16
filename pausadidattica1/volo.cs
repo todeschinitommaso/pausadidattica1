@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace pausadidattica1
 {
-    internal class volo
+    public class volo
     {
 
         public string _codice;
